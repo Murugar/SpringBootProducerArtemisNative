@@ -4,6 +4,7 @@ import javax.jms.JMSException;
 import javax.jms.Queue;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.jms.core.JmsTemplate;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
@@ -11,8 +12,8 @@ import org.springframework.stereotype.Component;
 @Component
 public class TestProducer {
 	
-	@Autowired
-	private Queue queue;
+	@Value("${jms.queue.destination}")
+	String destinationQueue;
 	
 	@Autowired
 	private JmsTemplate jms;
@@ -20,7 +21,7 @@ public class TestProducer {
 	
 	@Scheduled(fixedRate=1000)
 	public void send() throws JMSException {
-		System.out.println("sending message to " + this.queue.getQueueName());
-		this.jms.convertAndSend(this.queue, "message");
+		System.out.println("sending message to " + this.destinationQueue);
+		this.jms.convertAndSend(this.destinationQueue, "message");
 	}
 }

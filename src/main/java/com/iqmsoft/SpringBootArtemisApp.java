@@ -28,9 +28,5 @@ public class SpringBootArtemisApp {
 		SpringApplication.run(SpringBootArtemisApp.class, args);
 	}
 
-	@Bean
-	public ActiveMQQueue queue(){
-		return new ActiveMQQueue("artemis-queue-test");
-	}
-
+	
 }
